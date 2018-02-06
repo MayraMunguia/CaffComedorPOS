@@ -1,0 +1,22 @@
+{% extends "Comedor/base.html" %}
+{% load static %}
+{% block title %}
+	Pago
+{% endblock %}
+
+{% block content %}
+
+
+	<h1 style="font-size: 24px">Forma de Pago</h1>
+	<h2 style="font-size: 16px">Por favor, seleccione la forma de pago que desee.</h2>
+
+	<div>
+		<a name="payment" href="{% url 'orders:order_create'%}?Tarjeta" class="button button-blue">
+    		<span>Tarjeta <img src="{% static 'img/caffenio2.png' %}"/></span>
+		</a>
+		<br>
+		<a id="Efectivo" style=" width: 491; height: 80;" href="{% url 'orders:order_create'%}?Efectivo" class="button button-blue">
+    		<span>Efectivo<img src="{% static 'img/thing2.png' %}"/></span>
+		</a>
+	</div>
+{% endblock %}

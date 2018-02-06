@@ -1,0 +1,81 @@
+{% extends "Comedor/base.html" %}
+{% load static %}
+
+{% block title %}
+	{% if category %}{{ category.title }}{% else %}Productos{% endif %}
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+
+<a href="javascript:history.go(-1)"><img id="back" align="right" style="padding-right: 20px;width:60px; height:50px" src="{% static 'img/back.png' %}"></a>
+
+
+	<div class="product-detail">
+		<img style="width: 220px;height: 185px;" src="{% if product.image %}{{ product.image.url }}{% else %} {% static 'img/no_image.png' %}{% endif %}">
+		<h1 style="font-size: 24px;">{{ product.name }}</h1>
+
+<p class="price" style="font-size: 24px;">${{ product.price }}</p>
+<br>
+<br>
+<br>
+<div id="numericcontrol">
+
+	<form id="the_form" action="{% url 'cart:cart_add' product.id %}" method="post">
+			<a style="margin-right: 10px" class="minus" href="#">-</a>
+		
+			
+		{{ cart_product_form.quantity}}
+		{% csrf_token %}
+		<a style="float: right;margin-right: 125px" class="plus" href="#">+</a>	
+		<br>
+		<br>
+		<br>
+		<input type="submit" value="Agregar a la orden">
+		<br>
+		<br>
+		<br>
+		<br>
+</form>
+
+</div>
+
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script >
+	$(document).ready(function() {
+
+
+var numeric = document.getElementById("the_form");
+numeric.quantity.value = "1";
+
+
+	$val= numeric.quantity.value;
+	
+	$('#numericcontrol a.plus').click(function(){
+		$val++;
+		numeric.quantity.value = $val;
+	});
+	$('#numericcontrol a.minus').click(function(){
+		
+		if($val>1)
+		{
+		$val--;	
+		numeric.quantity.value = $val;
+		}
+		else
+		{
+			alert("La cantidad no puede ser menor a 0");
+		}
+	});
+
+});
+
+</script>
+
+
+{% endblock %}
